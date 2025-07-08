@@ -1,0 +1,100 @@
+Task 2: Exploratory Data Analysis (EDA)
+
+🔍 Description:
+Perform exploratory data analysis on a customer dataset to:
+
+Calculate and visualize overall churn rate.
+
+Explore customer distribution by demographics.
+
+Analyze tenure distribution.
+
+Investigate relationships between churn and contract types/payment methods.
+
+🔧 Step-by-Step Process
+
+1️⃣ Calculate & Visualize Overall Churn Rate
+📊 Code Example:
+python
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Calculate churn rate
+churn_counts = df['Churn'].value_counts(normalize=True)
+churn_rate = churn_counts['Yes'] * 100
+
+# Plot churn distribution
+sns.countplot(x='Churn', data=df)
+plt.title(f"Overall Churn Rate: {churn_rate:.2f}%")
+plt.ylabel("Number of Customers")
+plt.show()
+
+✅ Insight:
+The churn rate is a critical KPI.
+
+Helps understand the magnitude of customer retention issues.
+
+2️⃣ Customer Distribution by Demographics
+📌 Demographic Features Analyzed:
+Gender
+
+SeniorCitizen
+
+Partner
+
+Dependents
+
+📊 Visualization Example:
+python
+
+# Gender-wise distribution
+sns.countplot(x='gender', hue='Churn', data=df)
+plt.title("Churn by Gender")
+plt.show()
+Repeat similar visualizations for other demographics.
+
+✅ Insights:
+Check if senior citizens churn more.
+
+Analyze how dependents or having a partner influences churn behavior.
+
+3️⃣ Tenure Distribution Analysis
+📊 Histogram and KDE Plot:
+python
+
+sns.histplot(df['tenure'], kde=True, bins=30)
+plt.title("Tenure Distribution")
+plt.xlabel("Months")
+plt.show()
+✅ Insight:
+Identifies peak tenure lengths.
+
+Useful for understanding customer lifecycle and retention timeframes.
+
+4️⃣ Churn by Contract Type and Payment Method
+📊 Grouped Bar Plots:
+python
+
+# Contract Type
+sns.countplot(x='Contract', hue='Churn', data=df)
+plt.title("Churn by Contract Type")
+plt.show()
+
+# Payment Method
+sns.countplot(x='PaymentMethod', hue='Churn', data=df)
+plt.title("Churn by Payment Method")
+plt.xticks(rotation=45)
+plt.show()
+✅ Insight:
+Month-to-month customers show higher churn.
+
+Certain payment methods (e.g., electronic check) may be associated with higher churn.
+
+🧠 Skills Demonstrated
+Skill	Description
+📊 Statistical Analysis	Calculated churn rates and distribution metrics.
+📈 Data Visualization	Used Seaborn and Matplotlib for insightful visualizations.
+📌 Interpretation	Identified key patterns in churn behavior across features.
+🔎 EDA Techniques	Applied frequency analysis, KDE, histograms, and grouped counts.
