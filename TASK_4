@@ -1,0 +1,93 @@
+Task 4: Churn Prediction Model
+
+🎯 Objective:
+Develop a machine learning model using Logistic Regression to predict customer churn, and evaluate its performance using classification metrics like accuracy, precision, recall, and F1-score.
+
+🔧 Step-by-Step Implementation
+
+1️⃣ Data Preprocessing
+
+✅ Actions Taken:
+Handled missing values.
+
+Encoded categorical variables using One-Hot Encoding.
+
+Standardized numerical features (e.g., tenure, MonthlyCharges, TotalCharges).
+
+Split dataset into features (X) and target (y = Churn).
+
+python
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+# Encode target
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
+
+# Select features and target
+X = df.drop('Churn', axis=1)
+y = df['Churn']
+
+# One-hot encoding
+X = pd.get_dummies(X, drop_first=True)
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Feature scaling
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+2️⃣ Model Development – Logistic Regression
+python
+
+# Model training
+model = LogisticRegression()
+model.fit(X_train_scaled, y_train)
+
+# Predictions
+y_pred = model.predict(X_test_scaled)
+
+3️⃣ Model Evaluation
+
+📊 Evaluation Metrics Used:
+Accuracy
+
+Precision
+
+Recall
+
+F1-Score
+
+Confusion Matrix
+
+python
+
+# Evaluation
+print("Classification Report:\n", classification_report(y_test, y_pred))
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+# Confusion matrix
+conf_matrix = confusion_matrix(y_test, y_pred)
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+plt.title("Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
+
+✅ Sample Output:
+Metric	Value (example)
+Accuracy	80.3%
+Precision	72.5%
+Recall	68.2%
+F1-Score	70.3%
+
+🧠 Skills Demonstrated
+Skill	Description
+🤖 Machine Learning	Built classification model using logistic regression.
+🧮 Programming (Python)	Used libraries like Scikit-learn, Pandas, Matplotlib, Seaborn.
+📈 Model Evaluation	Applied and interpreted precision, recall, F1-score, and confusion matrix.
+📊 Data Processing	Implemented data cleaning, encoding, and scaling techniques.
