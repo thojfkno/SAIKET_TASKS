@@ -1,0 +1,73 @@
+Task 3: Customer Segmentation and Churn Analysis
+🎯 Objective:
+To segment customers using features like tenure, monthly charges, and contract type, and then analyze churn behavior across different customer segments.
+
+🔧 Step-by-Step Process
+
+1️⃣ Data Preparation
+Columns selected: tenure, MonthlyCharges, Contract, Churn.
+
+Ensured data quality by checking for:
+
+Missing values.
+
+Data type mismatches.
+
+Outliers (e.g., extremely high charges or tenure).
+
+2️⃣ Customer Segmentation
+📌 Approach Used:
+Used K-Means Clustering on tenure and MonthlyCharges for numerical segmentation.
+
+Contract Type included as a categorical feature (encoded).
+
+Standardized numerical features for better clustering performance.
+
+🧪 Example Code:
+python
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+import pandas as pd
+
+# One-hot encode contract type
+df_encoded = pd.get_dummies(df, columns=['Contract'], drop_first=True)
+
+# Features for clustering
+X = df_encoded[['tenure', 'MonthlyCharges', 'Contract_One year', 'Contract_Two year']]
+
+# Standardize
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Apply K-Means
+kmeans = KMeans(n_clusters=4, random_state=42)
+df['Segment'] = kmeans.fit_predict(X_scaled)
+
+3️⃣ Churn Rate Analysis by Segment
+📊 Segment-Wise Churn Rate:
+python
+
+segment_churn = df.groupby('Segment')['Churn'].value_counts(normalize=True).unstack().fillna(0)
+segment_churn['Churn Rate'] = segment_churn['Yes']
+
+✅ Key Observations:
+Segments with high monthly charges and low tenure showed higher churn rates.
+
+Customers on month-to-month contracts were more likely to churn.
+
+Segments with long tenure and yearly/two-year contracts had low churn.
+
+🔍 Insights Gained:
+Segment	Tenure	MonthlyCharges	Contract Type	Churn Trend
+0	Low	High	Month-to-month	🔺 High churn
+1	High	Low	Two-year	🔻 Low churn
+2	Mid	Mid	One-year	Moderate churn
+3	Low	Low	Month-to-month	Moderate to high churn
+
+🧠 Skills Demonstrated
+Skill	Description
+📌 Customer Segmentation	Applied unsupervised learning and categorical mapping to group similar customer types.
+📈 RFM-style Interpretation	Interpreted segments based on tenure (Recency), monthly charges (Monetary), and contract (Frequency/commitment).
+📊 Churn Analysis	Assessed churn distribution across segments to identify high-risk profiles.
+🧠 Analytical Thinking	Translated raw segmentation output into actionable business insights.
