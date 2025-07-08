@@ -1,0 +1,66 @@
+Task 1: Handling Missing Values and Encoding Categorical Variables
+
+🎯 Objective:
+To prepare the dataset for analysis or machine learning by:
+
+Handling missing values effectively.
+
+Converting categorical variables into numerical format using encoding techniques like One-Hot Encoding.
+
+
+🔧 Step-by-Step Process
+
+1️⃣ Handling Missing Values
+📌 Techniques Used:
+Identification of missing values using .isnull().sum().
+
+Strategies Applied:
+
+Numerical Features:
+
+Imputed using mean or median based on distribution.
+
+Categorical Features:
+
+Filled using mode (most frequent value).
+
+For features with too many missing values, considered dropping based on threshold (e.g., >40% nulls).
+
+🧪 Example:
+python
+
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("your_dataset.csv")
+
+# Handling numerical missing values
+df['Age'].fillna(df['Age'].median(), inplace=True)
+
+# Handling categorical missing values
+df['Gender'].fillna(df['Gender'].mode()[0], inplace=True)
+
+# Drop columns with >40% missing values
+df.dropna(thresh=int(0.6 * len(df)), axis=1, inplace=True)
+
+2️⃣ Encoding Categorical Variables
+📌 Techniques Used:
+One-Hot Encoding:
+
+Used for nominal categorical features (no order).
+
+Label Encoding (alternative, if needed):
+
+Used when the categorical variable is ordinal (e.g., 'Low', 'Medium', 'High').
+
+🧪 Example – One-Hot Encoding:
+python
+
+# One-hot encode 'Gender' and 'City' columns
+df_encoded = pd.get_dummies(df, columns=['Gender', 'City'], drop_first=True)
+
+🧠 Skills Demonstrated
+Skill	Description
+🔹 Proficiency in Data Cleaning	Identified and resolved missing values and inconsistent data entries.
+🔹 Missing Data Handling	Applied appropriate imputation strategies for different data types.
+🔹 Categorical Encoding	Converted categorical data into machine-readable formats for model training.
